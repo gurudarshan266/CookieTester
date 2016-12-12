@@ -74,9 +74,9 @@
         aString += '<table style="width:100%">\n<tr>\n';
         for (var i = 1 ; i <= theCookies.length; i++) {
             var cookie_key = theCookies[i-1].split('=')[0];
-            if(cookie_key.startsWith("S"))
+            if(!cookie_key.includes("NS"))
             {
-              aString +=   '<td><button type="button" class="btn btn-warning" style="width:100px"><span class="glyphicon glyphicon-lock"></span>'+cookie_key + "\n"+'</button></td>';
+              aString +=   '<td><button type="button" class="btn btn-success" style="width:100px"><span class="glyphicon glyphicon-lock"></span>'+cookie_key + "\n"+'</button></td>';
             }
             else
             {
