@@ -38,8 +38,8 @@
     </br>
     <input type="checkbox" value="true" id = "exp">Expire in 10 Seconds</label>
     <br/>
-    <button type="button" class="btn btn-secondary" onclick="addCookie();">Add Insecure Cookie</button>
-    <button type="button" class="btn btn-secondary" onclick="addSecCookie();">Add Secure Cookie</button>
+    <button type="button" class="btn btn-primary" onclick="addCookie();">Add Non-Secure Cookie</button>
+    <button type="button" class="btn btn-primary" onclick="addSecCookie();">Add Secure Cookie</button>
     </br>
     </p>
     <blockquote>
@@ -70,12 +70,26 @@
     function refreshCookies()
     {
         var theCookies = document.cookie.split(';');
-        var aString = '';
+        var aString = 'Cookie Count = '+theCookies.length+"<br><br>";
+        aString += '<table style="width:100%">\n<tr>\n';
         for (var i = 1 ; i <= theCookies.length; i++) {
-            aString +=   '<span class="badge">'+theCookies[i-1].split('=')[0] + "\n"+'</span>';
+            var cookie_key = theCookies[i-1].split('=')[0];
+            if(cookie_key.startsWith("S"))
+            {
+              aString +=   '<td><button type="button" class="btn btn-warning" style="width:100px"><span class="glyphicon glyphicon-lock"></span>'+cookie_key + "\n"+'</button></td>';
+            }
+            else
+            {
+              aString +=   '<td><button type="button" class="btn btn-warning" style="width:100px">'+cookie_key + "\n"+'</button></td>';
+            }
             if(i % 10 == 0)
-              aString += '</br>';
+            {
+              aString += "</tr><tr>"
+            }
+//              aString += '</br>';
         }
+
+        aString+="</tr></table>";
 
         document.getElementById("cookies").innerHTML = aString;
     }
@@ -95,7 +109,7 @@
 
       for(k = 1; k <= val; k++){
       var security = "";
-      document.cookie = "InSecCook"+i+"="+"dummy"+ security + expires+"; path=/";
+      document.cookie = "NS"+i+"="+"dummy"+ security + expires+"; path=/";
       i++;
     }
       refreshCookies();
@@ -114,7 +128,7 @@
       } 
       for(k = 1; k <= val; k++){
       var security = "; secure";
-      document.cookie = "SecCook"+y+"="+"dummy"+ security + expires+"; path=/";
+      document.cookie = "S"+y+"="+"dummy"+ security + expires+"; path=/";
       y++;
     }
       refreshCookies();
